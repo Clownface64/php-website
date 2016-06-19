@@ -14,13 +14,16 @@ require 'vendor/autoload.php';
 
 $page = isset($_GET['page']) ? $_GET['page'] : 'landing';
 
+//conect to the database
+$dbc = new mysqli('localhost', 'root', '', 'pinterest_db');
+
 // Load the appropriate files based on page
 switch ($page) {
 	// Home page
 	case 'landing':
 	case 'register':
 		require 'app/controllers/LandingController.php';
-		$controller = new LandingController();
+		$controller = new LandingController($dbc);
 	break;
 	
 	// About page
@@ -35,7 +38,7 @@ switch ($page) {
 	
 	// Stream page
 	case 'stream':
-		echo $plates->render('stream');
+		echo $_SESSION['id'];
 	break;
 	
 	// Login page
